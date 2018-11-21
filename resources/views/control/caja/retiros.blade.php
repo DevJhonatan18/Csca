@@ -1,14 +1,14 @@
 @extends('control.index')
 
 @section('content3')
-    
+
     <div class="d-flex justify-content-between align-items-end">
-        
-        <h1 class="mt-2 mb-3">{{ $titulo }}</h1>        
+
+        <h1 class="mt-2 mb-3">{{ $titulo }}</h1>
         <p>
             <form class="form-inline" method="POST" action="{{ url('admin/control/') }}">
                 {!!csrf_field()!!}
-                
+
                 @if($titulo == "Retiros del día")
                 <div class="form-group mx-sm-3 mb-2">
                     <input type="hidden" class="form-control" name="admin" value="{{ Auth::user()->nombre }}">
@@ -17,7 +17,7 @@
                     <input type="hidden" class="form-control" name="detalle" value="Retiro">
                     <input type="hidden" class="form-control" name="caja_abierta" value="1">
                 </div>
-                
+
                 <button type="submit" class="btn btn-primary">Cargar</button>
                 @else
                 <a href="{{route('control.caja.retiros')}}" class="btn btn-primary">Volver a retiros de hoy</a>
@@ -26,7 +26,7 @@
                     Historial
                 </button>
             </form>
-            
+
             <div class="collapse" id="collapseExample">
                 <div class="card card-body">
                     <p>
@@ -40,7 +40,7 @@
                                 <label> Hasta </label>
                                 <input required type="date" class="form-control" name="hasta" value="{{ date("Y-m-d") }}">
                             </div>
-                                
+
                             <button type="submit" class="btn btn-success">Buscar</button>
                         </form>
                     </p>
@@ -48,7 +48,7 @@
             </div>
         </p>
     </div>
-    
+
     <table class="table">
         <thead class="thead-dark"></thead>
           <tr></tr>
@@ -64,12 +64,12 @@
         </thead>
         <tbody>
             @foreach ($controls as $control)
-            <tr>
+            <tr class="text-uppercase" >
                 <th scope="row">{{ $control->id }}</th>
                 <td>{{ $control->admin }}</td>
                 <td><b>$</b> {{ $control->monto }}</td>
                 <td>{{ date('d/m/Y', strtotime($control->created_at)) }}</td>
-                <td>{{ date('H:i', strtotime($control->created_at)) }} <b>hs</b></td>
+                <td>{{ date('H:i', strtotime($control->created_at)) }} <b class="text-lowercase">hs</b></td>
                 @if($titulo == "Retiros del día")
                     <td>
                         <form action="{{ route('control.delete', [$id = $control->id]) }}" method="POST">
